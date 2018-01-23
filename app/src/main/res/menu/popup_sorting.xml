@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_sorting_default"
+        android:title="@string/sorting_default"/>
+
+    <item
+        android:id="@+id/action_sorting_name"
+        android:title="@string/sorting_name"/>
+
+    <item
+        android:id="@+id/action_sorting_color"
+        android:title="@string/sorting_color"/>
+</menu>

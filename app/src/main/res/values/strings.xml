@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">SW Destiny Utility</string>
+    <string name="raffle">Raffle</string>
+    <string name="debug_clear_db">Clear DB - DEBUG</string>
+    <string name="tournament">Tournament</string>
+    <string name="draft">Draft</string>
+    <string name="damage">Damage Roll</string>
+    <string name="battlefield">Battlefield Roll</string>
+    <string name="cards">Browse all cards</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="type_neutral">Neutral</string>
+    <string name="type_villain">Villain</string>
+    <string name="type_hero">Hero</string>
+    <string name="type_battlefield">Battlefield</string>
+    <string name="type_upgrade">Upgrade</string>
+    <string name="type_gray">Gray</string>
+    <string name="type_red">Red</string>
+    <string name="type_yellow">Yellow</string>
+    <string name="type_blue">Blue</string>
+    <string name="type_plot">Plot</string>
+    <string name="type_support">Support</string>
+    <string name="type_character">Character</string>
+    <string name="type_event">Event</string>
+    <string name="filter">FILTER</string>
+    <string name="battlefield_roll">Start battlefield roll</string>
+    <string name="damage_roll">Do damage roll</string>
+    <string name="image_card">Card image</string>
+    <string name="color_card">Card color</string>
+    <string name="item_select_card">Select Card</string>
+    <string name="search">Search</string>
+    <string name="sorting_name">Sort by name</string>
+    <string name="sorting_color">Sort by color</string>
+    <string name="sorting_default">Default</string>
+    <string name="sorting">Sorting</string>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_cards"
+            android:title="@string/cards" />
+        <item
+            android:id="@+id/nav_battlefield"
+            android:title="@string/battlefield" />
+        <item
+            android:id="@+id/nav_damage"
+            android:title="@string/damage" />
+        <item
+            android:id="@+id/nave_draft"
+            android:title="@string/draft" />
+        <item
+            android:id="@+id/nav_tournament"
+            android:title="@string/tournament" />
+        <item
+            android:id="@+id/nav_raffle"
+            android:title="@string/raffle" />
+        <item
+            android:id="@+id/nav_debug_clear"
+            android:title="@string/debug_clear_db" />
+    </group>
+</menu>

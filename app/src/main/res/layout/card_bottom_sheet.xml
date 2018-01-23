@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="48dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/twentyfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"  />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/thirtythree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.33"  />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fourty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fifty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/sixtysix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/seventyfive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_neutral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_neutral"
+            android:textOn="@string/type_neutral"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/thirtythree"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/peekview" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_villain"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_villain"
+            android:textOn="@string/type_villain"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/sixtysix"
+            app:layout_constraintStart_toStartOf="@+id/thirtythree"
+            app:layout_constraintTop_toBottomOf="@+id/peekview" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_hero"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_hero"
+            android:textOn="@string/type_hero"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/sixtysix"
+            app:layout_constraintTop_toBottomOf="@+id/peekview" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_battlefield"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_battlefield"
+            android:textOn="@string/type_battlefield"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/thirtythree"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_neutral" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_upgrade"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_upgrade"
+            android:textOn="@string/type_upgrade"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/thirtythree"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_battlefield" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_gray"
+            android:textOn="@string/type_gray"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/twentyfive"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_upgrade" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_red"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_red"
+            android:textOn="@string/type_red"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/fifty"
+            app:layout_constraintStart_toEndOf="@+id/btn_filter_gray"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_upgrade" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_yellow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_yellow"
+            android:textOn="@string/type_yellow"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/seventyfive"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_upgrade" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_blue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_blue"
+            android:textOn="@string/type_blue"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/seventyfive"
+            app:layout_constraintStart_toStartOf="@+id/fifty"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_upgrade" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_plot"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_plot"
+            android:textOn="@string/type_plot"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/sixtysix"
+            app:layout_constraintStart_toStartOf="@+id/thirtythree"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_villain" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_support"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_support"
+            android:textOn="@string/type_support"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/sixtysix"
+            app:layout_constraintStart_toStartOf="@+id/thirtythree"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_plot" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_character"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_character"
+            android:textOn="@string/type_character"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/sixtysix"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_hero" />
+
+        <ToggleButton
+            android:id="@+id/btn_filter_event"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/togglebutton_color"
+            android:onClick="onFilterButtonPressed"
+            android:textOff="@string/type_event"
+            android:textOn="@string/type_event"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/sixtysix"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_character" />
+
+        <TextView
+            android:id="@+id/peekview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="@string/filter"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
