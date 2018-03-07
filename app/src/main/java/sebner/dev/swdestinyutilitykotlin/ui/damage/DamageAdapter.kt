@@ -67,7 +67,7 @@ class DamageAdapter(
         private fun setValues(card: Card) = with(itemView){
             card_name.text = card.name
             card_affiliation.text = card.affiliation_name
-            card_die_sides.text = card.die_sides
+            card_die_sides.text = card.sides
 
             when(card.type_code) {
                 "character" -> {

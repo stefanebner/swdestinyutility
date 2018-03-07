@@ -11,11 +11,13 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "cards")
 class Card : Comparable<Card> {
 
-    var die_sides: String = ""
+    var sides: String = ""
     var set_code: String = ""
     var set_name: String = ""
     var type_code: String = ""
     var type_name: String = ""
+    var subtype_code: String = ""
+    var subtype_name: String = ""
     var faction_code: String = ""
     var faction_name: String = ""
     var affiliation_code: String = ""

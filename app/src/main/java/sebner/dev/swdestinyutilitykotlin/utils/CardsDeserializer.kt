@@ -49,7 +49,7 @@ class CardsDeserializer : JsonDeserializer<Card> {
             }
         }
 
-        card.die_sides = die_sides
+        card.sides = die_sides
         card.set_code = jsonObject.get("set_code").asString
         card.set_name + jsonObject.get("set_name").asString
         card.type_code = cardType
