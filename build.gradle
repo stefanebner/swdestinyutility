@@ -11,7 +11,7 @@ ext {
     supportLibraryVersion = '26.1.0'
     kotlinVersion = '1.2.30'
     constraintVersion = '1.0.2'
-    junitVersion = '4.12'
+    junitVersion = '4.1.2'
     mockitoVersion = '1.5.0'
     kluentVersion = '1.33'
     orchestratorVersion = '1.0.1'

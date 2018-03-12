@@ -11,8 +11,10 @@ class Die(dieSides: String) {
     fun getDieSides(): List<DieSide> = parsedSides
     fun getDieSide(pos: Int) = parsedSides[pos]
     fun getAmountDieSides() = parsedSides.size
+    fun hasDieSide(side: TYPE) = parsedSides.any { it.type == side }
+    fun getDieSides(side: TYPE) = parsedSides.filter { s -> s.type == side  }
 
-    private fun getTypeFromSide(side: String) : TYPE {
+    fun getTypeFromSide(side: String) : TYPE {
         return when {
             side.contains(TYPE.SPECIAL.id) -> TYPE.SPECIAL
             side.contains(TYPE.RANGED.id) -> TYPE.RANGED
@@ -32,7 +34,7 @@ class Die(dieSides: String) {
             TYPE.SPECIAL -> DieSide(TYPE.SPECIAL)
             else -> {
                 val modifier = side.startsWith('+')
-                val value = if(modifier) side.substring(1..1).toInt() else side.substring(0..0).toInt()
+                val value = if (modifier) side.substring(1..1).toInt() else side.substring(0..0).toInt()
                 val resource = if (side[side.lastIndex].isDigit()) side.substring(side.lastIndex..side.lastIndex).toInt() else 0
                 DieSide(getTypeFromSide(side), modifier, value, resource)
             }

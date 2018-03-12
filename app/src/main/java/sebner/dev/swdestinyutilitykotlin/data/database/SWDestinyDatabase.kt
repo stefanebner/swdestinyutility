@@ -25,7 +25,7 @@ abstract class SWDestinyDatabase : RoomDatabase() {
                 }
 
         private fun buildDatabase(context: Context?) =
-                if(context != null) {
+                if (context != null) {
                     Room.databaseBuilder(context.applicationContext,
                             SWDestinyDatabase::class.java, "SWDestinyDatabase.db").build()
                 } else {

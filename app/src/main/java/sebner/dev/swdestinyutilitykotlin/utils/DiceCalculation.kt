@@ -11,7 +11,9 @@ class DiceCalculation(private val dice: List<Die>) {
 
     fun getBattlefieldRoll(): Int {
         var result = 0
-        dice.forEach({ die -> result = result.plus(die.getDieSide(die.getAmountDieSides()).value) })
+        dice.forEach({ die ->
+            result = result.plus(die.getDieSide(random.nextInt(die.getAmountDieSides())).value)
+        })
         return result
     }
 
@@ -42,5 +44,15 @@ class DiceCalculation(private val dice: List<Die>) {
             }
         }
         return total
+    }
+
+    fun getProbability(target: Int, type: TYPE, resources: Int) : Double {
+
+        return 0.0
+    }
+
+    fun getChanceForBaseSide(list: List<Die> = dice, type: TYPE) : Double {
+
+        return 0.0
     }
 }

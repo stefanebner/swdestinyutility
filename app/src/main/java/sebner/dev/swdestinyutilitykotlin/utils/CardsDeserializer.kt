@@ -25,7 +25,7 @@ class CardsDeserializer : JsonDeserializer<Card> {
             val jsonSidesArray = jsonObject.get("sides").asJsonArray
             for (i in 0 until jsonSidesArray.size()) {
                 sb.append(jsonSidesArray[i].toString().replace("\"", ""))
-                if(i < jsonSidesArray.size()-1) {
+                if (i < jsonSidesArray.size()-1) {
                     sb.append(' ')
                 }
             }

@@ -46,7 +46,7 @@ class CardListFragment: FilterFragment() {
             t: List<Card>? -> kotlin.run {
                 t?.let { cardAdapter.updateCards(it) }
 
-                if(position == RecyclerView.NO_POSITION) {
+                if (position == RecyclerView.NO_POSITION) {
                         position = 0
                 }
                 recyclerview_cards.smoothScrollToPosition(position)
@@ -56,7 +56,7 @@ class CardListFragment: FilterFragment() {
     }
 
     private fun onCardClicked(src: String) {
-        if(src.isEmpty()) return
+        if (src.isEmpty()) return
 
         full_image.loadImage(src)
         full_image.visibility = View.VISIBLE
@@ -133,7 +133,7 @@ class CardListFragment: FilterFragment() {
                 recyclerview_cards.setVisible()
             }
             false -> {
-                if(!viewModel.cardsInRepository()) {
+                if (!viewModel.cardsInRepository()) {
                     loading_indicator_cards.setVisible()
                 }
                 recyclerview_cards.setInvisible()
