@@ -70,7 +70,7 @@ class DamageViewModel(private val repository: CardRepository): ViewModel() {
     fun doCalculation(): String {
         val diceList: MutableList<Card> = adapterList.filter { it.code.isNotEmpty() }.toMutableList()
         adapterList.forEach { card -> if (card.isElite) diceList.add(card)}
-        val calc = DiceCalculation(diceList.map { Die(it.sides) })
+        val calc = DiceCalculation(diceList.map { Die(it.die_sides) })
         return calc.getDamageRoll().toString()
     }
 

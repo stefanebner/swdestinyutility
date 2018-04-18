@@ -2,9 +2,7 @@ package sebner.dev.swdestinyutilitykotlin.ui.cards
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
@@ -12,28 +10,27 @@ import android.support.v7.widget.SearchView
 import android.view.*
 import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_cards.*
+import org.koin.android.architecture.ext.viewModel
 import sebner.dev.swdestinyutilitykotlin.R
 import sebner.dev.swdestinyutilitykotlin.model.Card
 import sebner.dev.swdestinyutilitykotlin.ui.FilterFragment
-import sebner.dev.swdestinyutilitykotlin.utils.*
+import sebner.dev.swdestinyutilitykotlin.utils.ifNotNull
+import sebner.dev.swdestinyutilitykotlin.utils.loadImage
+import sebner.dev.swdestinyutilitykotlin.utils.setInvisible
+import sebner.dev.swdestinyutilitykotlin.utils.setVisible
 
 class CardListFragment: FilterFragment() {
 
     private lateinit var cardAdapter: CardAdapter
     private var position = RecyclerView.NO_POSITION
 
-    private lateinit var viewModel: CardListViewModel
+    private val viewModel by viewModel<CardListViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_cards, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        context?.let {
-            val factory = InjectorUtils().provideCardListViewModelFactory(it)
-            viewModel = ViewModelProviders.of(this as Fragment, factory)
-                    .get(CardListViewModel::class.java) }
 
         setHasOptionsMenu(true)
 
@@ -46,7 +43,7 @@ class CardListFragment: FilterFragment() {
             t: List<Card>? -> kotlin.run {
                 t?.let { cardAdapter.updateCards(it) }
 
-                if (position == RecyclerView.NO_POSITION) {
+                if(position == RecyclerView.NO_POSITION) {
                         position = 0
                 }
                 recyclerview_cards.smoothScrollToPosition(position)
@@ -56,7 +53,7 @@ class CardListFragment: FilterFragment() {
     }
 
     private fun onCardClicked(src: String) {
-        if (src.isEmpty()) return
+        if(src.isEmpty()) return
 
         full_image.loadImage(src)
         full_image.visibility = View.VISIBLE
@@ -75,7 +72,7 @@ class CardListFragment: FilterFragment() {
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextChange(query: String): Boolean {
-                AppExecutors.getInstance().diskIO.execute { viewModel.searchForText(query) }
+                viewModel.searchForText(query)
                 return true
             }
 
@@ -83,7 +80,7 @@ class CardListFragment: FilterFragment() {
         })
         menuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                AppExecutors.getInstance().diskIO.execute { viewModel.searchForText("") }
+                viewModel.searchForText("")
                 return true
             }
 
@@ -133,7 +130,7 @@ class CardListFragment: FilterFragment() {
                 recyclerview_cards.setVisible()
             }
             false -> {
-                if (!viewModel.cardsInRepository()) {
+                if(!viewModel.cardsInRepository()) {
                     loading_indicator_cards.setVisible()
                 }
                 recyclerview_cards.setInvisible()
@@ -142,8 +139,6 @@ class CardListFragment: FilterFragment() {
     }
 
     override fun onFilterButtonPressed(v: View) {
-        AppExecutors.getInstance().diskIO.execute({
-            viewModel.filterButtonPressed((v as Button).text.toString())
-        })
+        viewModel.filterButtonPressed((v as Button).text.toString())
     }
 }

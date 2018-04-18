@@ -7,7 +7,9 @@ import android.arch.lifecycle.ViewModel
 import sebner.dev.swdestinyutilitykotlin.data.CardRepository
 import sebner.dev.swdestinyutilitykotlin.model.Card
 
-class CardListViewModel(private val repository: CardRepository): ViewModel() {
+class CardListViewModel(
+        private val repository: CardRepository
+): ViewModel() {
 
     private val filter = HashSet<String>()
     private var comparator = Card().defaultComparator

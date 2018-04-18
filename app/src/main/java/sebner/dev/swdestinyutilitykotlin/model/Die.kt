@@ -11,8 +11,8 @@ class Die(dieSides: String) {
     fun getDieSides(): List<DieSide> = parsedSides
     fun getDieSide(pos: Int) = parsedSides[pos]
     fun getAmountDieSides() = parsedSides.size
-    fun hasDieSide(side: TYPE) = parsedSides.any { it.type == side }
-    fun getDieSides(side: TYPE) = parsedSides.filter { s -> s.type == side  }
+    fun hasDieSide(type: TYPE) = parsedSides.any { it.type == type }
+    fun getDieSides(type: TYPE) = parsedSides.filter { s -> s.type == type  }
 
     fun getTypeFromSide(side: String) : TYPE {
         return when {

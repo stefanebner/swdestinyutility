@@ -1,21 +1,26 @@
 package sebner.dev.swdestinyutilitykotlin.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import sebner.dev.swdestinyutilitykotlin.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import sebner.dev.swdestinyutilitykotlin.ui.damage.DamageFragment
+import org.koin.android.ext.android.inject
+import sebner.dev.swdestinyutilitykotlin.R
+import sebner.dev.swdestinyutilitykotlin.data.CardRepository
+import sebner.dev.swdestinyutilitykotlin.data.SetRepository
 import sebner.dev.swdestinyutilitykotlin.ui.cards.CardListFragment
-import sebner.dev.swdestinyutilitykotlin.utils.InjectorUtils
+import sebner.dev.swdestinyutilitykotlin.ui.damage.DamageFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private val setRepository by inject<SetRepository>()
+    private val cardRepository by inject<CardRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +34,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         savedInstanceState ?: kotlin.run {
-            InjectorUtils().provideSetRepository(this).startInitialSync()
+            setRepository.startInitialSync()
             supportFragmentManager.beginTransaction()
                     .add(R.id.fragment_container, CardListFragment() as Fragment?, "main")
                     .commit()
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+        if(drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
@@ -56,8 +61,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ?.replace(R.id.fragment_container, DamageFragment() as Fragment, "fragment_damage")
                     ?.commit()
             R.id.nav_debug_clear -> {
-                InjectorUtils().provideCardRepository(this).clearAll()
-                InjectorUtils().provideSetRepository(this).clearAll()
+                cardRepository.clearAll()
+                setRepository.clearAll()
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)

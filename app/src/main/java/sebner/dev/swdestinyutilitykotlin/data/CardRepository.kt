@@ -1,72 +1,58 @@
 package sebner.dev.swdestinyutilitykotlin.data
 
 import android.arch.lifecycle.Observer
+import org.jetbrains.anko.doAsync
 import sebner.dev.swdestinyutilitykotlin.data.database.CardsDao
+import sebner.dev.swdestinyutilitykotlin.data.database.SWDestinyDatabase
+import sebner.dev.swdestinyutilitykotlin.data.database.SetsDao
 import sebner.dev.swdestinyutilitykotlin.data.network.SwDestinyNetworkDataSource
 import sebner.dev.swdestinyutilitykotlin.model.Card
-import sebner.dev.swdestinyutilitykotlin.utils.AppExecutors
 
 /**
  * Handles data operations for all the cards.
  */
-class CardRepository private constructor(
-        private val dao:CardsDao,
-        private val dataSource: SwDestinyNetworkDataSource,
-        private val executors: AppExecutors
+class CardRepository (
+        database: SWDestinyDatabase,
+        private val dataSource: SwDestinyNetworkDataSource
 ) {
+    private val cardsDao: CardsDao = database.db.cardsDao()
+    private val setsDao: SetsDao = database.db.setsDao()
 
     init {
         val networkData = dataSource.getActiveCards()
-        val cardObserver = Observer<Array<Card>> { data -> executors.diskIO.execute { dao.insertAll(data) } }
+        val cardObserver = Observer<List<Card>> { data -> doAsync { cardsDao.insertAll(data) } }
         networkData.observeForever(cardObserver)
-        checkIfFetchNeeded()
+//        checkIfFetchNeeded()
     }
 
     private var isInitialized = false
 
-    companion object {
-
-        @Volatile private var INSTANCE: CardRepository? = null
-
-        fun getInstance(dao: CardsDao, dataSource: SwDestinyNetworkDataSource,
-                        executors: AppExecutors) : CardRepository =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: createCardRepository(dao, dataSource, executors).also { INSTANCE = it }
-                }
-
-        private fun createCardRepository(dao: CardsDao, dataSource: SwDestinyNetworkDataSource,
-                                         executors: AppExecutors) = CardRepository(dao, dataSource, executors)
-    }
-
     private fun startSync() {
-        dataSource.startCardSync()
+        dataSource.startCardSync(setsDao.getCurrentSetsForSync())
     }
 
     private fun doCardDataSync() {
         if (isInitialized) return else isInitialized = true
 
         dataSource.scheduleRecurringCardSync()
-        executors.diskIO.execute { startSync() }
+        doAsync { startSync() }
     }
 
     private fun checkIfFetchNeeded() {
-        AppExecutors.getInstance().diskIO.execute({
-            if (dao.getCardsWithMissingImages().isNotEmpty()) {
-                doCardDataSync()
-            }
-        })
-
+        if (cardsDao.getCardsWithMissingImages().isNotEmpty()) {
+            doCardDataSync()
+        }
     }
 
-    fun getAll() = dao.getAll()
+    fun getAll() = cardsDao.getAll()
 
-    fun getAllCardsWithDice() = dao.getAllCardsWithDice()
+    fun getAllCardsWithDice() = cardsDao.getAllCardsWithDice()
 
-    fun getCardsWith(searchTerm: String, filter: Set<String>) = dao.getCardsWith(searchTerm, filter)
+    fun getCardsWith(searchTerm: String, filter: Set<String>) = cardsDao.getCardsWith(searchTerm, filter)
 
-    fun clearAll() = dao.clearAll()
+    fun clearAll() = cardsDao.clearAll()
 
-    fun getCharacters() = dao.getCharacters()
+    fun getCharacters() = cardsDao.getCharacters()
 
-    fun getCharactersWith(filter: Set<String>) = dao.getCharactersWith(filter)
+    fun getCharactersWith(filter: Set<String>) = cardsDao.getCharactersWith(filter)
 }

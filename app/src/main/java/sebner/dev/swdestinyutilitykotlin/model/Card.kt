@@ -11,13 +11,11 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "cards")
 class Card : Comparable<Card> {
 
-    var sides: String = ""
+    var die_sides: String = ""
     var set_code: String = ""
     var set_name: String = ""
     var type_code: String = ""
     var type_name: String = ""
-    var subtype_code: String = ""
-    var subtype_name: String = ""
     var faction_code: String = ""
     var faction_name: String = ""
     var affiliation_code: String = ""
@@ -36,7 +34,6 @@ class Card : Comparable<Card> {
     var points_elite: Int = 0
     var text: String = ""
     var deck_limit: Int = 0
-    var flavor: String = ""
     var illustrator: String = ""
     var has_die: Boolean = false
     var has_errata: Boolean = false
@@ -45,6 +42,9 @@ class Card : Comparable<Card> {
     var imagesrc: String = ""
     var label: String = ""
     var cp: Int = 0
+    var subtype_code: String = ""
+    var subtype_name: String = ""
+    var flavor: String = ""
     @Ignore
     var isElite = false
 

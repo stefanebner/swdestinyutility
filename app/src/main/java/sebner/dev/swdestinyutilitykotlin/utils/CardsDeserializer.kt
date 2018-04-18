@@ -1,11 +1,8 @@
 package sebner.dev.swdestinyutilitykotlin.utils
 
-import com.google.gson.JsonDeserializer
-import sebner.dev.swdestinyutilitykotlin.model.Card
 import android.text.TextUtils
-import com.google.gson.JsonElement
-import com.google.gson.JsonParseException
-import com.google.gson.JsonDeserializationContext
+import com.google.gson.*
+import sebner.dev.swdestinyutilitykotlin.model.Card
 import java.lang.reflect.Type
 
 
@@ -25,7 +22,7 @@ class CardsDeserializer : JsonDeserializer<Card> {
             val jsonSidesArray = jsonObject.get("sides").asJsonArray
             for (i in 0 until jsonSidesArray.size()) {
                 sb.append(jsonSidesArray[i].toString().replace("\"", ""))
-                if (i < jsonSidesArray.size()-1) {
+                if(i < jsonSidesArray.size()-1) {
                     sb.append(' ')
                 }
             }
@@ -49,7 +46,7 @@ class CardsDeserializer : JsonDeserializer<Card> {
             }
         }
 
-        card.sides = die_sides
+        card.die_sides = die_sides
         card.set_code = jsonObject.get("set_code").asString
         card.set_name + jsonObject.get("set_name").asString
         card.type_code = cardType
@@ -79,7 +76,15 @@ class CardsDeserializer : JsonDeserializer<Card> {
         card.imagesrc = if (jsonObject.get("imagesrc").isJsonNull) "" else jsonObject.get("imagesrc").asString
         card.label = jsonObject.get("label").asString
         card.cp = jsonObject.get("cp").asInt
+        card.flavor = if (jsonObject.get("flavor").isJsonNull) "" else jsonObject.get("flavor").asString
+        card.subtype_code = jsonObject.getRoomSafeString("subtype_code")
+        card.subtype_name = jsonObject.getRoomSafeString("subtype_name")
+
 
         return card
     }
+}
+
+fun JsonObject.getRoomSafeString(name: String): String {
+    return if (!has(name) || get(name).isJsonNull) "" else get(name).asString
 }

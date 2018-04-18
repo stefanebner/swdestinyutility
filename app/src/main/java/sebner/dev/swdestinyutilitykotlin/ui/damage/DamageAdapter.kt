@@ -42,7 +42,7 @@ class DamageAdapter(
 
     inner class CardViewHolder(itemView: View): ViewHolder(itemView) {
         fun bind(card: Card, listener: (Card) -> Unit) = with(itemView) {
-            if (card.code.isEmpty()) {
+            if(card.code.isEmpty()) {
                 spinner_card_selection.setVisible()
                 spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinner_card_selection.adapter = spinnerAdapter
@@ -53,7 +53,7 @@ class DamageAdapter(
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                         val c = parent?.getItemAtPosition(pos) as Card
-                        if (c.code.isNotEmpty()) {
+                        if(c.code.isNotEmpty()) {
                             listener(c)
                         }
                     }
@@ -67,13 +67,13 @@ class DamageAdapter(
         private fun setValues(card: Card) = with(itemView){
             card_name.text = card.name
             card_affiliation.text = card.affiliation_name
-            card_die_sides.text = card.sides
+            card_die_sides.text = card.die_sides
 
             when(card.type_code) {
                 "character" -> {
                     card_health.text = card.health.toString()
                     card_cost.text  = card.getPoints()
-                    if (card.unique) {
+                    if(card.unique) {
                         card_checkbox_elite.setVisible()
                         card_checkbox_elite.isChecked = card.isElite
                         card_checkbox_elite.onClick { card.isElite = !card.isElite }
@@ -96,7 +96,7 @@ class DamageAdapter(
                 else -> { card_color.setBackgroundColor(Color.GRAY) }
             }
 
-            if (card.imagesrc.isEmpty()) {
+            if(card.imagesrc.isEmpty()) {
                 card_picture.setBackgroundColor(Color.WHITE)
             } else {
                 card_picture.loadImage(card.imagesrc)

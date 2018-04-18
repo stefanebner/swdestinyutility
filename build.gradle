@@ -5,13 +5,13 @@ ext {
     minSdkVersion = 24
     targetSdkVersion = 27
     compSdkVersion = 27
-    buildToolsVersion = '27.0.2'
+    buildToolsVersion = '27.1.0'
 
     // App dependencies
-    supportLibraryVersion = '26.1.0'
-    kotlinVersion = '1.2.30'
+    supportLibraryVersion = '27.1.0'
+    kotlinVersion = '1.2.31'
     constraintVersion = '1.0.2'
-    junitVersion = '4.1.2'
+    junitVersion = '4.12'
     mockitoVersion = '1.5.0'
     kluentVersion = '1.33'
     orchestratorVersion = '1.0.1'
@@ -23,10 +23,12 @@ ext {
     glideVersion = '4.4.0'
     okHttpVersion = '3.9.1'
     firebaseJobDispatcherVersion = '0.8.5'
+    koinVersion = '0.9.2'
+    retrofitVersion = '2.4.0'
 
     // Architecture Components dependencies
-    lifecycleVersion = '1.0.0'
-    roomVersion = '1.1.0-alpha3'
+    archLifecycleVersion = '1.1.1'
+    roomVersion = "1.1.0-beta1"
 }
 
 buildscript {
@@ -35,8 +37,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha05'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.20"
+        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.31"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

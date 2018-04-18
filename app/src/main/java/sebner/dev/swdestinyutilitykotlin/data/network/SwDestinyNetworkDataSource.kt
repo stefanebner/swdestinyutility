@@ -3,84 +3,72 @@ package sebner.dev.swdestinyutilitykotlin.data.network
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.firebase.jobdispatcher.*
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.GooglePlayDriver
+import com.firebase.jobdispatcher.Lifetime
+import com.firebase.jobdispatcher.Trigger
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.startService
 import sebner.dev.swdestinyutilitykotlin.model.Card
 import sebner.dev.swdestinyutilitykotlin.model.Set
-import sebner.dev.swdestinyutilitykotlin.utils.AppExecutors
-import sebner.dev.swdestinyutilitykotlin.utils.InjectorUtils
-import sebner.dev.swdestinyutilitykotlin.utils.JsonParser
 import java.util.concurrent.TimeUnit
 
 /*
  * Provides the API to work with sets and cards
  */
-class SwDestinyNetworkDataSource private constructor(
-        val context: Context,
-        private val appExecutors: AppExecutors
+class SwDestinyNetworkDataSource(
+        private val context: Context,
+        private val restApi: RestApi
 ) {
-
-    private val destinySets: MutableLiveData<Array<Set>> = MutableLiveData()
-    private val allCards: MutableLiveData<Array<Card>> = MutableLiveData()
+    private val destinySets: MutableLiveData<List<Set>> = MutableLiveData()
+    private val allCards: MutableLiveData<List<Card>> = MutableLiveData()
     private val syncIntervalHours: Int = 2
     private val syncIntervalSeconds: Int = TimeUnit.HOURS.toSeconds(syncIntervalHours.toLong()).toInt()
     private val syncFlextimeSeconds: Int = syncIntervalSeconds / 2
     private val swDestinySetSyncTag = "swdestiny-set-sync"
 
-    companion object {
-
-        @Volatile private var INSTANCE: SwDestinyNetworkDataSource? = null
-
-        fun getInstance(context: Context, appExecutors: AppExecutors) : SwDestinyNetworkDataSource =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: createDataSource(
-                            context, appExecutors).also { INSTANCE = it }
-                }
-
-        private fun createDataSource(context: Context, appExecutors: AppExecutors) =
-                SwDestinyNetworkDataSource(context, appExecutors)
-
-    }
-
-    fun getActiveSets(): LiveData<Array<Set>> {
+    fun getActiveSets(): LiveData<List<Set>> {
         return destinySets
     }
 
-    fun getActiveCards(): LiveData<Array<Card>> {
+    fun getActiveCards(): LiveData<List<Card>> {
         return allCards
     }
 
-    fun startCardSync() = syncCards(InjectorUtils().provideSetRepository(context).getCurrentSetsForSync())
+    fun startCardSync(setsForSync: List<Set>) = syncCards(setsForSync)
 
     fun startSetSyncService() {
         context.startService<SetSyncIntentService>()
     }
 
     fun syncSets() {
-        appExecutors.networkIO.execute {
-            try {
-                val response:String? = NetworkUtils().getJsonResponse(NetworkUtils().getSetsUrl())
-                val sets:Array<Set> = JsonParser().parseSetsFrom(response ?: "")
-                destinySets.postValue(sets)
-                syncCards(sets)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        launch(CommonPool) {
+            val sets = restApi.getSets()
+            destinySets.postValue(sets.await())
+            syncCards(sets.await())
         }
     }
 
-    private fun syncCards(sets: Array<Set>) {
-        appExecutors.networkIO.execute {
-            try {
-                sets
-                        .asSequence()
-                        .map { NetworkUtils().getJsonResponse(NetworkUtils().getCardsUrl(it.code)) }
-                        .forEach { allCards.postValue(JsonParser().parseCardsFrom(it ?: "")) }
-            } catch (e: Exception) {
-                e.printStackTrace()
+    private fun syncCards(sets: List<Set>) {
+        launch(CommonPool) {
+            sets.forEach {
+                val cards = getCards(it.code)
+                allCards.postValue(cards)
             }
         }
+
+//        try {
+//            sets
+//                .asSequence()
+//                .map { it.code }
+//                .forEach { launch(CommonPool) { allCards.postValue(getCards(it)) }}
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
     }
+
+    private suspend fun getCards(set: String) = restApi.getCards(set).await()
 
     fun scheduleRecurringCardSync() {
         val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(context))

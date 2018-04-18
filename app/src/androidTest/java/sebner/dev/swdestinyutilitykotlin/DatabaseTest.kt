@@ -1,13 +1,12 @@
 package sebner.dev.swdestinyutilitykotlin
 
-import org.amshove.kluent.*
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
-import org.junit.runner.RunWith
 import android.support.test.runner.AndroidJUnit4
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import sebner.dev.swdestinyutilitykotlin.data.database.CardsDao
 import sebner.dev.swdestinyutilitykotlin.data.database.SWDestinyDatabase
 import sebner.dev.swdestinyutilitykotlin.data.database.SetsDao

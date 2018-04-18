@@ -53,7 +53,7 @@ class CardAdapter(
                 else -> { card_color.setBackgroundColor(Color.GRAY) }
             }
 
-            if (card.imagesrc.isEmpty()) {
+            if(card.imagesrc.isEmpty()) {
                 card_picture.setBackgroundColor(Color.WHITE)
             } else {
                 card_picture.loadImage(card.imagesrc)
